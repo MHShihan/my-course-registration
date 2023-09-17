@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import Cart from "../Cart/Cart";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
@@ -19,7 +21,9 @@ const Home = () => {
 
     let count = parseInt(course.credit);
     if (isExist) {
-      return alert("This Course is already selected");
+      return toast.warn("You Can't Select a Course Twice!", {
+        position: "top-center",
+      });
     } else {
       selectedCourse.forEach((item) => {
         count = count + parseInt(item.credit);
@@ -27,7 +31,9 @@ const Home = () => {
 
       const remainingTime = 20 - count;
       if (count > 20) {
-        return alert("You can watch only 20hr");
+        return toast.warn("You Have Only 20 Credits", {
+          position: "top-center",
+        });
       } else {
         setTotalTime(count);
         setTimeLeft(remainingTime);
@@ -74,6 +80,7 @@ const Home = () => {
                   >
                     Select
                   </button>
+                  <ToastContainer />
                 </div>
               </div>
             </div>
