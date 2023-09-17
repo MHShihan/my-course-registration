@@ -80,7 +80,7 @@ const Home = () => {
                   >
                     Select
                   </button>
-                  <ToastContainer />
+                  <ToastContainer autoClose={1000} />
                 </div>
               </div>
             </div>
