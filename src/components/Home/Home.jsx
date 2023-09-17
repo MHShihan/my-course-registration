@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import Cart from "../cart/Cart";
+import Cart from "../Cart/Cart";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState([]);
+  const [totalTime, setTotalTime] = useState([]);
+  const [timeLeft, setTimeLeft] = useState([]);
 
   useEffect(() => {
     fetch("./data.json")
@@ -11,6 +14,27 @@ const Home = () => {
       .then((data) => setCourses(data));
   }, []);
 
+  const handleSelectCourse = (course) => {
+    const isExist = selectedCourse.find((item) => item.id === course.id);
+
+    let count = parseInt(course.credit);
+    if (isExist) {
+      return alert("This Course is already selected");
+    } else {
+      selectedCourse.forEach((item) => {
+        count = count + parseInt(item.credit);
+      });
+
+      const remainingTime = 20 - count;
+      if (count > 20) {
+        return alert("You can watch only 20hr");
+      } else {
+        setTotalTime(count);
+        setTimeLeft(remainingTime);
+        setSelectedCourse([...selectedCourse, course]);
+      }
+    }
+  };
   //   console.log(selectedCourse);
 
   return (
